@@ -7,11 +7,10 @@ const User = require("../models/User");
 router.post("/edit", async (req, res, next) => {
   try {
     const id = req.user._id;
-    const { username, campus, course } = req.body;
+    const { username, password } = req.body;
     await User.findByIdAndUpdate(id, {
       username,
-      campus,
-      course
+      password
     });
     return res.json({ status: "Edit Profile" });
   } catch (error) {
