@@ -12,7 +12,7 @@ const teacherSchema = new Schema(
         "Fisica",
         "Quimica",
         "Biologia",
-        "Ed.Fisica",
+        "EdFisica",
       ],
     },
   },
