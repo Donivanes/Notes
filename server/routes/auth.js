@@ -6,26 +6,27 @@ const User = require("../models/User");
 const _ = require("lodash");
 
 const passport = require("passport");
-const { hashPassword } = require("../lib/hashPassword");
+
 const { isLoggedIn, isLoggedOut } = require("../lib/isLoggedMiddleware");
 
 // SIGNUP
 router.post("/signup", isLoggedOut(), async (req, res, next) => {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
 
   // Create the user
   const existingUser = await User.findOne({ username });
   if (!existingUser) {
     const newUser = await User.create({
       username,
-      password: hashPassword(password)
+      password,
+      email,
     });
     // Directly login user
-    req.logIn(newUser, err => {
-      res.json(_.pick(req.user, ["username", "_id", "createdAt", "updatedAt"]));
+    req.logIn(newUser, (err) => {
+      res.status(201).json(_.pick(req.user, ["username", "email"]));
     });
   } else {
-    res.json({ status: "User Exist" });
+    res.status(401).json({ status: "User Exist" });
   }
 });
 
@@ -35,10 +36,9 @@ router.post(
   isLoggedOut(),
   passport.authenticate("local"),
   (req, res) => {
-    // Directly login user
-    return res.json(
-      _.pick(req.user, ["username", "_id", "createdAt", "updatedAt"])
-    );
+    return res
+      .status(200)
+      .json(_.pick(req.user, ["username", "_id", "createdAt", "updatedAt"]));
   }
 );
 
@@ -46,9 +46,11 @@ router.post(
 router.post("/logout", isLoggedIn(), async (req, res, next) => {
   if (req.user) {
     req.logout();
-    return res.json({ status: "Log out" });
+    return res.status(200).json({ status: "Log out" });
   } else {
-    return res.json({ status: "You have to be logged in to logout" });
+    return res
+      .status(500)
+      .json({ status: "You have to be logged in to logout" });
   }
 });
 
