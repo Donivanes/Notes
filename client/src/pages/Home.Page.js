@@ -13,7 +13,7 @@ export const HomePage = () => {
           Regístrate como alumno
         </Link>
         <Link className="button" to="/signupTeacher">
-          Regístrate como teacher
+          Regístrate como profesor
         </Link>
         <Link className="button" to="/login">
           Iniciar Sesión

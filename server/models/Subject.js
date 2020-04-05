@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const subjectSchema = new Schema(
   {
+    username: { type: Schema.ObjectId, ref: "User" },
     Matematicas: [Number],
     Lengua: [Number],
     Fisica: [Number],

@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { signup } from "../../lib/authApi";
 import { UserContext } from "../components/context/Context";
 
-export const SignUpPage = withRouter(({ history }) => {
+export const SignUpStudentPage = withRouter(({ history }) => {
   const { user, setUser } = useContext(UserContext);
 
   const methods = useForm({
@@ -85,7 +85,6 @@ export const SignUpPage = withRouter(({ history }) => {
         </select>
         <input type="submit" />
       </form>
-      );
     </FormContext>
   );
 });
