@@ -4,10 +4,7 @@ const Schema = mongoose.Schema;
 const studentSchema = new Schema(
   {
     username: { type: Schema.ObjectId, ref: "User" },
-    course: {
-      type: String,
-      enum: ["Primero", "Segundo", "Tercero", "Cuarto", "Quinto", "Sexto"],
-    },
+    course: { type: Schema.ObjectId, ref: "Course" },
   },
   {
     timestamps: true,

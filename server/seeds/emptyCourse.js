@@ -3,12 +3,12 @@ const Course = require("../models/Course");
 
 withDbConnection(
   async () =>
-    await Course.create({
-      Primero: [],
-      Segundo: [],
-      Tercero: [],
-      Cuarto: [],
-      Quinto: [],
-      Sexto: [],
-    })
+    await Course.create([
+      { name: "Primero" },
+      { name: "Segundo" },
+      { name: "Tercero" },
+      { name: "Cuarto" },
+      { name: "Quinto" },
+      { name: "Sexto" },
+    ])
 );

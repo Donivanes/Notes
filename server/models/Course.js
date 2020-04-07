@@ -3,12 +3,7 @@ const Schema = mongoose.Schema;
 
 const courseSchema = new Schema(
   {
-    Primero: [{ type: Schema.ObjectId, ref: "User" }],
-    Segundo: [{ type: Schema.ObjectId, ref: "User" }],
-    Tercero: [{ type: Schema.ObjectId, ref: "User" }],
-    Cuarto: [{ type: Schema.ObjectId, ref: "User" }],
-    Quinto: [{ type: Schema.ObjectId, ref: "User" }],
-    Sexto: [{ type: Schema.ObjectId, ref: "User" }],
+    name: String,
   },
   {
     timestamps: true,

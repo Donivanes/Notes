@@ -27,45 +27,14 @@ router.post("/signup", isLoggedOut(), async (req, res, next) => {
       email,
     });
     if (course && !subject) {
+      const findIdCourse = await Course.findOne({ name: course });
       const newStudent = await Student.create({
         username: newUser._id,
-        course,
+        course: findIdCourse._id,
       });
       const newStudentSubject = await Subject.create({
         username: newUser._id,
       });
-      // if (course === "Primero") {
-      //   const addToCourse = await Course.findOneAndUpdate(
-      //     console.log(newUser),
-      //     { $push: { Primero: newUser._id } },
-      //     { new: true }
-      //   );
-      // } else if (course === "Segundo") {
-      //   const addToCourse = await Course.findOneAndUpdate(
-      //     { $push: { Segundo: newUser._id } },
-      //     { new: true }
-      //   );
-      // } else if (course === "Tercero") {
-      //   const addToCourse = await Course.findOneAndUpdate(
-      //     { $push: { Tercero: newUser._id } },
-      //     { new: true }
-      //   );
-      // } else if (course === "Cuarto") {
-      //   const addToCourse = await Course.findOneAndUpdate(
-      //     { $push: { Cuarto: newUser._id } },
-      //     { new: true }
-      //   );
-      // } else if (course === "Quinto") {
-      //   const addToCourse = await Course.findOneAndUpdate(
-      //     { $push: { Quinto: newUser._id } },
-      //     { new: true }
-      //   );
-      // } else if (course === "Sexto") {
-      //   const addToCourse = Course.findOneAndUpdate(
-      //     { $push: { Sexto: newUser._id } },
-      //     { new: true }
-      //   );
-      // }
     } else if (!course && subject) {
       const newTeacher = await Teacher.create({
         username: newUser._id,
