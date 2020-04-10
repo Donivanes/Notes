@@ -10,10 +10,11 @@ export const SignUpTeacherPage = withRouter(({ history }) => {
   const methods = useForm({
     mode: "onBlur",
     defaultValues: {
-      username: "",
       email: "",
       password: "",
-      course: "",
+      firstname: "",
+      lastname: "",
+      subject: "",
     },
   });
 
@@ -31,14 +32,13 @@ export const SignUpTeacherPage = withRouter(({ history }) => {
         <label>USUARIO</label>
         <input
           type="text"
-          placeholder="Usuario"
+          placeholder="Nombre de usuario"
           name="username"
           ref={register({
             required: {
               value: true,
               message: "Este campo es requerido",
             },
-            maxLength: 15,
           })}
         />
         <label>EMAIL</label>
@@ -74,8 +74,32 @@ export const SignUpTeacherPage = withRouter(({ history }) => {
             },
           })}
         />
+        <label>NOMBRE</label>
+        <input
+          type="text"
+          placeholder="Nombre"
+          name="firstname"
+          ref={register({
+            required: {
+              value: true,
+              message: "Este campo es requerido",
+            },
+          })}
+        />
+        <label>APELLIDOS</label>
+        <input
+          type="text"
+          placeholder="Apellidos"
+          name="lastname"
+          ref={register({
+            required: {
+              value: true,
+              message: "Este campo es requerido",
+            },
+          })}
+        />
         <label>Asignatura</label>
-        <select name="course" ref={register({ required: true })}>
+        <select name="subject" ref={register({ required: true })}>
           <option value="Matematicas">Matematicas</option>
           <option value="Lengua">Lengua</option>
           <option value="Fisica">Fisica</option>

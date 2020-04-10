@@ -1,1 +1,0 @@
-poder hacer un get de cada curso. 

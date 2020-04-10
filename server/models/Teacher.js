@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 const teacherSchema = new Schema(
   {
     username: { type: Schema.ObjectId, ref: "User" },
+    firstname: String,
+    lastname: String,
     subject: {
       type: String,
       enum: [
@@ -18,6 +20,14 @@ const teacherSchema = new Schema(
   },
   {
     timestamps: true,
+    toJSON: {
+      transform(doc, ret) {
+        delete ret.createdAt;
+        delete ret.updatedAt;
+        delete ret.__v;
+        return ret;
+      },
+    },
   }
 );
 

@@ -22,7 +22,7 @@ export const login = async (username, password) => {
 export const logout = async () => await api.get("/auth/logout");
 
 export const loggedin = async () => {
-  const { data } = await api.get("/auth/loggedin");
+  const { data } = await api.get("/user/loggedin");
   return _.pick(data, "username", "email");
 };
 

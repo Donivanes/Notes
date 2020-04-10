@@ -10,9 +10,10 @@ export const SignUpStudentPage = withRouter(({ history }) => {
   const methods = useForm({
     mode: "onBlur",
     defaultValues: {
-      username: "",
       email: "",
       password: "",
+      firstname: "",
+      lastname: "",
       course: "",
     },
   });
@@ -31,14 +32,13 @@ export const SignUpStudentPage = withRouter(({ history }) => {
         <label>USUARIO</label>
         <input
           type="text"
-          placeholder="Usuario"
+          placeholder="Nombre de usuario"
           name="username"
           ref={register({
             required: {
               value: true,
               message: "Este campo es requerido",
             },
-            maxLength: 15,
           })}
         />
         <label>EMAIL</label>
@@ -71,6 +71,30 @@ export const SignUpStudentPage = withRouter(({ history }) => {
               value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/,
               message:
                 "La contraseña requiere al meno una mayuscula, minuscula y numero",
+            },
+          })}
+        />
+        <label>NOMBRE</label>
+        <input
+          type="text"
+          placeholder="Nombre"
+          name="firstname"
+          ref={register({
+            required: {
+              value: true,
+              message: "Este campo es requerido",
+            },
+          })}
+        />
+        <label>APELLIDOS</label>
+        <input
+          type="text"
+          placeholder="Apellidos"
+          name="lastname"
+          ref={register({
+            required: {
+              value: true,
+              message: "Este campo es requerido",
             },
           })}
         />

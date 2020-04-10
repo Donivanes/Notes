@@ -1,28 +1,36 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+// const mongoose = require("mongoose");
+// const Schema = mongoose.Schema;
 
-const subjectSchema = new Schema(
-  {
-    username: { type: Schema.ObjectId, ref: "User" },
-    Matematicas: [Number],
-    Lengua: [Number],
-    Fisica: [Number],
-    Quimica: [Number],
-    Biologia: [Number],
-    EdFisica: [Number],
-  },
-  {
-    timestamps: true,
-  }
-);
+// const subjectSchema = new Schema(
+//   {
+//     username: { type: Schema.ObjectId, ref: "User" },
+//     Matematicas: [Number],
+//     Lengua: [Number],
+//     Fisica: [Number],
+//     Quimica: [Number],
+//     Biologia: [Number],
+//     EdFisica: [Number],
+//   },
+//   {
+//     timestamps: true,
+//     toJSON: {
+//       transform(doc, ret) {
+//         delete ret.createdAt;
+//         delete ret.updatedAt;
+//         delete ret.__v;
+//         return ret;
+//       },
+//     },
+//   }
+// );
 
-const Subject = mongoose.model("Subject", subjectSchema);
+// const Subject = mongoose.model("Subject", subjectSchema);
 
-Subject.collection.createIndexes([
-  {
-    key: { username: 1 },
-    name: "username",
-  },
-]);
+// Subject.collection.createIndexes([
+//   {
+//     key: { username: 1 },
+//     name: "username",
+//   },
+// ]);
 
-module.exports = Subject;
+// module.exports = Subject;

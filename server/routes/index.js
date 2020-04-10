@@ -9,12 +9,14 @@ router.get("/", (req, res, next) => {
 });
 
 const auth = require("./auth");
-// const user = require("./user");
+const user = require("./user");
+const student = require("./student");
 
 router.use("/auth", auth);
 
 router.use(isLoggedIn());
 
-// router.use("/user", user);
+router.use("/user", user);
+router.use("/student", student);
 
 module.exports = router;
