@@ -5,8 +5,8 @@ const User = require("../models/User");
 
 /* GET USER*/
 
-// LOGGEDIN
-router.get("/loggedin", async (req, res) => {
+// WHOAMI
+router.get("/whoami", async (req, res) => {
   if (req.user) return res.json(req.user);
   else return res.status(401).json({ status: "No user session present" });
 });

@@ -19,6 +19,7 @@ router.get("/", (req, res, next) => {
 router.get("/course/:courseId", (req, res, next) => {
   const { courseId } = req.params;
   Student.find({ course: courseId })
+    .populate("course")
     .then((course) => {
       res.json(course);
     })

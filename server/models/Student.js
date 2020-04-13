@@ -14,6 +14,7 @@ const studentSchema = new Schema(
       Quimica: { type: Array },
       Biologia: { type: Array },
       EdFisica: { type: Array },
+      Ingles: { type: Array },
     },
   },
   {

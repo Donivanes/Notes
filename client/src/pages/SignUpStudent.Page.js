@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useForm, FormContext } from "react-hook-form";
 import { withRouter } from "react-router-dom";
-import { signup } from "../../lib/authApi";
+import { doSignup } from "../../lib/auth.api";
 import { UserContext } from "../components/context/Context";
 
 export const SignUpStudentPage = withRouter(({ history }) => {
@@ -21,9 +21,9 @@ export const SignUpStudentPage = withRouter(({ history }) => {
   const { register, handleSubmit, errors } = methods;
 
   const onSubmit = async (data) => {
-    await signup(data);
+    await doSignup(data);
     setUser(data);
-    history.push("/");
+    history.push("/profile");
   };
 
   return (
@@ -107,7 +107,7 @@ export const SignUpStudentPage = withRouter(({ history }) => {
           <option value="Quinto">Quinto</option>
           <option value="Sexto">Sexto</option>
         </select>
-        <input type="submit" />
+        <button type="submit" />
       </form>
     </FormContext>
   );

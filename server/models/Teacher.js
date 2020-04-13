@@ -15,6 +15,7 @@ const teacherSchema = new Schema(
         "Quimica",
         "Biologia",
         "EdFisica",
+        "Ingles",
       ],
     },
   },
