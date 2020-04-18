@@ -11,7 +11,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 
 mongoose
-  .connect(process.env.DBURL, {
+  .connect(process.env.DBURL_HEROKU, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
