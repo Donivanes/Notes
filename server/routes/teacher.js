@@ -16,9 +16,8 @@ router.get("/", (req, res, next) => {
 
 //GET ONE TEACHER
 
-router.get("/:id", (req, res, next) => {
-  const { id } = req.params;
-  Teacher.findOne({ _id: id })
+router.get("/getteacher", (req, res, next) => {
+  Teacher.findOne({ username: req.user._id })
     .then((teacher) => {
       res.json(teacher);
     })

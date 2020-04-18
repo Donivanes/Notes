@@ -3,7 +3,7 @@ import { UserContext, whoami } from "./auth.api";
 import { Loading } from "./authHelpers/Loading";
 
 // THIS is a HOC
-export const withAuthentication = Component => () => {
+export const withAuthentication = (Component) => () => {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -13,11 +13,11 @@ export const withAuthentication = Component => () => {
 
     // Try to get the current logged in user from our backend
     whoami()
-      .then(user => {
+      .then((user) => {
         console.error(`Welcome again user ${user.username}`);
         setUser(user);
       })
-      .catch(e => {
+      .catch((e) => {
         console.error("No user logged in ");
       })
       .finally(() => setLoading(false));

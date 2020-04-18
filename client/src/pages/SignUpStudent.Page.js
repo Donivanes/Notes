@@ -1,11 +1,21 @@
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import { useForm, FormContext } from "react-hook-form";
 import { withRouter } from "react-router-dom";
-import { doSignup } from "../../lib/auth.api";
-import { UserContext } from "../components/context/Context";
+import { doSignup, useUserSetter } from "../../lib/auth.api";
+
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
 export const SignUpStudentPage = withRouter(({ history }) => {
-  const { user, setUser } = useContext(UserContext);
+  const setUser = useUserSetter();
+
+  const [course, setCourse] = useState("");
+
+  const handleChange = (event) => {
+    setCourse(event.target.value);
+  };
 
   const methods = useForm({
     mode: "onBlur",
@@ -23,92 +33,144 @@ export const SignUpStudentPage = withRouter(({ history }) => {
   const onSubmit = async (data) => {
     await doSignup(data);
     setUser(data);
-    history.push("/profile");
+    history.push("/");
   };
 
   return (
-    <FormContext {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>USUARIO</label>
-        <input
-          type="text"
-          placeholder="Nombre de usuario"
-          name="username"
-          ref={register({
-            required: {
-              value: true,
-              message: "Este campo es requerido",
-            },
-          })}
-        />
-        <label>EMAIL</label>
-        <input
-          type="email"
-          placeholder="Email"
-          name="email"
-          ref={register({
-            required: {
-              value: true,
-              message: "Este campo es requerido",
-            },
-            pattern: {
-              value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i,
-              message: "Formato email no valido",
-            },
-          })}
-        />
-        <label>CONTRASEÑA</label>
-        <input
-          type="password"
-          placeholder="Contraseña"
-          name="password"
-          ref={register({
-            required: {
-              value: true,
-              message: "Este campo es requerido",
-            },
-            pattern: {
-              value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/,
-              message:
-                "La contraseña requiere al meno una mayuscula, minuscula y numero",
-            },
-          })}
-        />
-        <label>NOMBRE</label>
-        <input
-          type="text"
-          placeholder="Nombre"
-          name="firstname"
-          ref={register({
-            required: {
-              value: true,
-              message: "Este campo es requerido",
-            },
-          })}
-        />
-        <label>APELLIDOS</label>
-        <input
-          type="text"
-          placeholder="Apellidos"
-          name="lastname"
-          ref={register({
-            required: {
-              value: true,
-              message: "Este campo es requerido",
-            },
-          })}
-        />
-        <label>CURSO</label>
-        <select name="course" ref={register({ required: true })}>
-          <option value="Primero">Primero</option>
-          <option value="Segundo">Segundo</option>
-          <option value="Tercero">Tercero</option>
-          <option value="Cuarto">Cuarto</option>
-          <option value="Quinto">Quinto</option>
-          <option value="Sexto">Sexto</option>
-        </select>
-        <button type="submit" />
-      </form>
-    </FormContext>
+    <>
+      <style type="text/css">
+        {`
+    .btn-flat {
+      background-color: purple;
+      color: white;
+    }
+
+    .btn-xxl {
+      padding: 1rem 1.5rem;
+      font-size: 1.5rem;
+    }
+    `}
+      </style>
+      <FormContext {...methods}>
+        <Container>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form.Group controlId="user">
+              <Form.Label>Usuario</Form.Label>
+              <Form.Control
+                name="username"
+                placeholder="Nombre de usuario"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: "Este campo es requerido",
+                  },
+                })}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                name="email"
+                type="email"
+                placeholder="Email"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: "Este campo es requerido",
+                  },
+                  pattern: {
+                    value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/i,
+                    message: "Formato email no valido",
+                  },
+                })}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="password">
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control
+                name="password"
+                type="password"
+                placeholder="Contraseña"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: "Este campo es requerido",
+                  },
+                  pattern: {
+                    value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/,
+                    message:
+                      "La contraseña requiere al meno una mayuscula, minuscula y numero",
+                  },
+                })}
+              />
+            </Form.Group>
+
+            <Form.Row>
+              <Form.Group as={Col} controlId="firstname">
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control
+                  name="firstname"
+                  type="text"
+                  placeholder="Nombre"
+                  ref={register({
+                    required: {
+                      value: true,
+                      message: "Este campo es requerido",
+                    },
+                  })}
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="lastname">
+                <Form.Label>Apellido</Form.Label>
+                <Form.Control
+                  name="lastname"
+                  type="text"
+                  placeholder="Apellidos"
+                  ref={register({
+                    required: {
+                      value: true,
+                      message: "Este campo es requerido",
+                    },
+                  })}
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="course">
+                <Form.Label>Curso</Form.Label>
+                <Form.Control
+                  as="select"
+                  value=""
+                  name="course"
+                  type="text"
+                  placeholder="Curso"
+                  value={course}
+                  onChange={handleChange}
+                  ref={register({
+                    required: {
+                      value: true,
+                      message: "Este campo es requerido",
+                    },
+                  })}
+                >
+                  <option>Primero</option>
+                  <option>Segundo</option>
+                  <option>Tercero</option>
+                  <option>Cuarto</option>
+                  <option>Quinto</option>
+                  <option>Sexto</option>
+                </Form.Control>
+              </Form.Group>
+            </Form.Row>
+
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
+        </Container>
+      </FormContext>
+    </>
   );
 });

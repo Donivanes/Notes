@@ -42,10 +42,10 @@ router.post("/signup", isLoggedOut(), async (req, res, next) => {
         lastname,
         course: findIdCourse._id,
       });
-      // const newStudentSubject = await Subject.create({
-      //   username: newUser._id,
-      // });
     } else if (!course && subject) {
+      const findUser = await User.findByIdAndUpdate(newUser._id, {
+        isstudent: false,
+      });
       const newTeacher = await Teacher.create({
         username: newUser._id,
         firstname,

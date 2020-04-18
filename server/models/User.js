@@ -27,6 +27,10 @@ const userSchema = new Schema(
       required: [true, "Password is required"],
       match: [PASSWORD_PATTERN, "Invalid password pattern"],
     },
+    isstudent: {
+      type: String,
+      default: true,
+    },
   },
   {
     timestamps: true,

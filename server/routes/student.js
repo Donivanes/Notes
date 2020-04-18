@@ -28,9 +28,8 @@ router.get("/course/:courseId", (req, res, next) => {
 
 //GET ONE STUDENT
 
-router.get("/:id", (req, res, next) => {
-  const { id } = req.params;
-  Student.findOne({ _id: id })
+router.get("/getstudent", (req, res, next) => {
+  Student.findOne({ username: req.user._id })
     .then((student) => {
       res.json(student);
     })

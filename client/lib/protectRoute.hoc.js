@@ -8,8 +8,8 @@ const ProtectedPagePlaceholder = () => <div>PROTECTED PAGE</div>;
 // This is a HOC -> High Order Component
 export const withProtected = (
   Component,
-  { redirect = true, redirectTo = "/auth/login" } = {} // options are always present
-) => props => {
+  { redirect = true, redirectTo = "/login" } = {} // options are always present
+) => (props) => {
   const user = useUser();
   const isUserLoading = useUserIsLoading();
 

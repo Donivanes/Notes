@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useContext } from "react";
-import _ from "lodash";
 
 export const UserContext = React.createContext();
 
@@ -37,34 +36,60 @@ const api = axios.create({
   withCredentials: true,
 });
 
-export const doSignup = async (user) => {
+export const doSignup = async ({
+  username,
+  email,
+  password,
+  firstname,
+  lastname,
+  course,
+  subject,
+}) => {
   // Axios post a ruta /auth/signup en servidor
   // para crear un usuario en mongodb
   console.log(`Registrando usuario...`);
-  const { data } = await api.post("/auth/signup", {
-    user,
+  const res = await api.post("/auth/signup", {
+    username,
+    email,
+    password,
+    firstname,
+    lastname,
+    course,
+    subject,
   });
   console.log("Created User");
-  return _.pick(data, "username", "email");
+  return res.data;
 };
 
-export const doLogin = async (username, password) => {
+export const doLogin = async ({ username, password }) => {
   console.log("Do Login");
-  const { data } = await api.post("/auth/login", {
+  const res = await api.post("/auth/login", {
     username,
     password,
   });
   console.log(res.data);
-  return _.pick(data, "username", "email");
+  return res.data;
 };
 
-export const doLogout = async () => await api.get("/auth/logout");
+export const doLogout = async () => await api.post("/auth/logout");
 
 export const whoami = async () => {
-  const { data } = await api.get("/user/whoami");
-  return _.pick(data, "username", "email");
+  const res = await api.get("/user/whoami");
+  return res.data;
 };
 
-// export const edit = async () => await api.post("/user/edit", { user });
+export const doEdit = async () => await api.put("/user/edit", { user });
 
-// export const upload = async image => await api.post("/user/upload", { image });
+//STUDENT
+
+export const getStudent = async () => {
+  const res = await api.get("/student/getstudent");
+  return res.data;
+};
+
+//TEACHER
+
+export const getAllTeachers = async () => {
+  const res = await api.get("/teacher");
+  return res.data;
+};
