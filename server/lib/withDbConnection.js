@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const dbUrl = process.env.DBURL;
+const dbUrl = process.env.DBURL_HEROKU;
 
 const withDbConnection = async (fn, disconnectEnd = true) => {
   try {
     await mongoose.connect(dbUrl, {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     });
     console.log(`Connection Ready on ${dbUrl}`);
     await fn();
