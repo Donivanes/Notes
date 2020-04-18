@@ -2,30 +2,68 @@ const express = require("express");
 const router = express.Router();
 
 const User = require("../models/User");
+const Student = require("../models/Student");
+const Teacher = require("../models/Teacher");
+// const Subject = require("../models/Subject");
+const Course = require("../models/Course");
 
 const _ = require("lodash");
 
 const passport = require("passport");
-const { hashPassword } = require("../lib/hashPassword");
+
 const { isLoggedIn, isLoggedOut } = require("../lib/isLoggedMiddleware");
 
 // SIGNUP
 router.post("/signup", isLoggedOut(), async (req, res, next) => {
-  const { username, password } = req.body;
+  const {
+    username,
+    email,
+    password,
+    firstname,
+    lastname,
+    course,
+    subject,
+  } = req.body;
 
   // Create the user
   const existingUser = await User.findOne({ username });
+
   if (!existingUser) {
     const newUser = await User.create({
       username,
-      password: hashPassword(password)
+      email,
+      password,
     });
+    if (course && !subject) {
+      const findIdCourse = await Course.findOne({ name: course });
+      const newStudent = await Student.create({
+        username: newUser._id,
+        firstname,
+        lastname,
+        course: findIdCourse._id,
+      });
+    } else if (!course && subject) {
+      const findUser = await User.findByIdAndUpdate(newUser._id, {
+        isstudent: false,
+      });
+      const newTeacher = await Teacher.create({
+        username: newUser._id,
+        firstname,
+        lastname,
+        subject,
+      });
+    } else {
+      res.status(401).json({ status: "Fill every field" });
+    }
+
     // Directly login user
-    req.logIn(newUser, err => {
-      res.json(_.pick(req.user, ["username", "_id", "createdAt", "updatedAt"]));
+    req.logIn(newUser, (err) => {
+      res
+        .status(201)
+        .json(_.pick(req.user, ["username", "email", "firstname", "lastname"]));
     });
   } else {
-    res.json({ status: "User Exist" });
+    res.status(401).json({ status: "User Exist" });
   }
 });
 
@@ -35,10 +73,9 @@ router.post(
   isLoggedOut(),
   passport.authenticate("local"),
   (req, res) => {
-    // Directly login user
-    return res.json(
-      _.pick(req.user, ["username", "_id", "createdAt", "updatedAt"])
-    );
+    return res
+      .status(200)
+      .json(_.pick(req.user, ["email", "_id", "createdAt", "updatedAt"]));
   }
 );
 
@@ -46,16 +83,12 @@ router.post(
 router.post("/logout", isLoggedIn(), async (req, res, next) => {
   if (req.user) {
     req.logout();
-    return res.json({ status: "Log out" });
+    return res.status(200).json({ status: "Log out" });
   } else {
-    return res.json({ status: "You have to be logged in to logout" });
+    return res
+      .status(500)
+      .json({ status: "You have to be logged in to logout" });
   }
-});
-
-// LOGGEDIN
-router.get("/loggedin", isLoggedIn(), async (req, res) => {
-  if (req.user) return res.json(req.user);
-  else return res.status(401).json({ status: "No user session present" });
 });
 
 module.exports = router;
