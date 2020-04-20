@@ -11,6 +11,7 @@ import { SignUpTeacherPage } from "./pages/SignUpTeacher.Page";
 import { LoginPage } from "./pages/Login.Page";
 import { StudentPage } from "./pages/Student.Page";
 import { StudentNotesPage } from "./pages/StudentNotes.Page";
+import { StudentConctactPage } from "./pages/StudentContact.Page";
 
 export const App = withAuthentication(() => (
   <Router>
@@ -22,7 +23,7 @@ export const App = withAuthentication(() => (
         <Route path="/login" component={LoginPage} />
         <Route path="/student" component={StudentPage} />
         <Route path="/califications" component={StudentNotesPage} />
-        <Route path="/contact" component={StudentNotesPage} />
+        <Route path="/contact" component={StudentConctactPage} />
 
         {/* <Route path="/profile" component={ProfilePage} /> */}
       </Switch>

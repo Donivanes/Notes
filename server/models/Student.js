@@ -1,9 +1,20 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const EMAIL_PATTERN = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
 const studentSchema = new Schema(
   {
     username: { type: Schema.ObjectId, ref: "User" },
+    email: {
+      type: String,
+      trim: true,
+      match: [EMAIL_PATTERN, "Please fill a valid email address"],
+      sparse: true,
+      unique: false,
+      default: null,
+      lowercase: true,
+    },
     firstname: String,
     lastname: String,
     course: { type: Schema.ObjectId, ref: "Course" },

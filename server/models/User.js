@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 
 const SALT_WORK_FACTOR = 10;
-const EMAIL_PATTERN = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 const PASSWORD_PATTERN = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{4,8}$/;
 
 const userSchema = new Schema(
@@ -12,15 +11,6 @@ const userSchema = new Schema(
     username: {
       type: String,
       required: "Name is required",
-    },
-    email: {
-      type: String,
-      trim: true,
-      match: [EMAIL_PATTERN, "Please fill a valid email address"],
-      sparse: true,
-      unique: false,
-      default: null,
-      lowercase: true,
     },
     password: {
       type: String,

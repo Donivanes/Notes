@@ -30,6 +30,7 @@ router.get("/course/:courseId", (req, res, next) => {
 
 router.get("/getstudent", (req, res, next) => {
   Student.findOne({ username: req.user._id })
+    .populate("course")
     .then((student) => {
       res.json(student);
     })

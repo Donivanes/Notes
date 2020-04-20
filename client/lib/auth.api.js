@@ -75,6 +75,7 @@ export const doLogout = async () => await api.post("/auth/logout");
 
 export const whoami = async () => {
   const res = await api.get("/user/whoami");
+  // console.log(res.data);
   return res.data;
 };
 
@@ -91,5 +92,12 @@ export const getStudent = async () => {
 
 export const getAllTeachers = async () => {
   const res = await api.get("/teacher");
+  return res.data;
+};
+
+//EMAIL
+
+export const sendEmail = async (dataToSubmit) => {
+  const res = await api.post("/email/sendEmail", dataToSubmit);
   return res.data;
 };
