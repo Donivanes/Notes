@@ -39,7 +39,7 @@ const Page = () => {
             <li>{parks.description}</li>
           ))} */}
           <li>Matematicas</li>
-          <p>{student.firstname}</p>
+          <p>{student.notes?.Matematicas}</p>
           <li>Lengua</li>
           <li>Fisica</li>
           <li>Quimica</li>

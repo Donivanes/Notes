@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const courseSchema = new Schema(
+const examSchema = new Schema(
   {
-    name: String,
-    exams: [{ type: Schema.ObjectId, ref: "Exam" }],
+    course: String,
+    subject: String,
+    time: {
+      type: Array,
+      default: ["09:00", "10:00", "11:00", "12:00", "13:00"],
+    },
   },
   {
     timestamps: true,
@@ -20,6 +24,6 @@ const courseSchema = new Schema(
   }
 );
 
-const Course = mongoose.model("Course", courseSchema);
+const Exam = mongoose.model("Exam", examSchema);
 
-module.exports = Course;
+module.exports = Exam;

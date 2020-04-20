@@ -1,58 +1,108 @@
 import React, { useState, useEffect } from "react";
+import { useForm, FormContext } from "react-hook-form";
+import { withRouter } from "react-router-dom";
 import { withProtected } from "../../lib/protectRoute.hoc";
-import { useUser, getAllTeachers } from "../../lib/auth.api";
-import styled from "styled-components";
+import {
+  useUser,
+  getAllTeachers,
+  getStudent,
+  sendEmail,
+} from "../../lib/auth.api";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-`;
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
-const Button = styled.button`
-  background-color: #eaffd0;
-  color: black;
-  border: 1px solid black;
-  border-radius: 2em;
-  box-shadow: 5px 5px 10px #000000;
-  padding: 2em 0;
-  margin: 1em;
-  width: 20vw;
-  font-size: 1em;
-`;
-
-const Page = () => {
-  const [email, setEmail] = useState("");
+const Page = withRouter(({ history }) => {
   const [teacher, setTeacher] = useState([]);
+  const [student, setStudent] = useState([]);
+
   const user = useUser();
+  const [teacherEmail, setTeacherEmail] = useState("");
 
   useEffect(() => {
     getAllTeachers().then((teachers) => setTeacher(teachers));
   }, []);
-  console.log(teachers);
 
-  if (!user) {
-    return <div>cargando</div>;
-  } else
-    return (
+  useEffect(() => {
+    getStudent().then((student) => setStudent(student));
+  }, []);
+
+  const handleChange = (event) => {
+    setTeacherEmail(event.target.value);
+  };
+
+  const methods = useForm({
+    mode: "onBlur",
+    defaultValues: {
+      text: "",
+      teacherEmail: "",
+    },
+  });
+
+  const { register, handleSubmit, errors } = methods;
+
+  const onSubmit = async (data) => {
+    const dataToSumbit = {
+      student,
+      data,
+    };
+    await sendEmail(dataToSumbit);
+    history.push("/student");
+  };
+
+  return (
+    <FormContext {...methods}>
       <Container>
-        <form onSubmit={handleSubmit}>
-          <input
-            id="name"
-            placeholdder="name"
-            value={name}
-            onClick={handleClick}
-          />
-          <input
-            id="name"
-            placeholdder="name"
-            value={name}
-            onClick={handleClick}
-          />
-          <button onClick={handleSubmit}>Enviar email</button>
-        </form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Form.Group controlId="teacher">
+            <Form.Label>Email del Profesor</Form.Label>
+            <Form.Control
+              as="select"
+              value=""
+              name="teacherEmail"
+              type="text"
+              placeholder="Email del profesor"
+              value={teacherEmail}
+              onChange={handleChange}
+              ref={register({
+                required: {
+                  value: true,
+                  message: "Este campo es requerido",
+                },
+              })}
+            >
+              {teacher.map((teacher, i) => (
+                <option key={i}>
+                  {`${teacher.subject} <${teacher.email}>`}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+
+          <Form.Group controlId="text">
+            <Form.Label>Cuerpo del email</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows="3"
+              name="text"
+              placeholder="Escribe tu correo aqui"
+              ref={register({
+                required: {
+                  value: true,
+                  message: "Este campo es requerido",
+                },
+              })}
+            />
+          </Form.Group>
+
+          <Button variant="primary" type="submit">
+            Enviar correo!
+          </Button>
+        </Form>
       </Container>
-    );
-};
+    </FormContext>
+  );
+});
 
 export const StudentConctactPage = withProtected(Page);

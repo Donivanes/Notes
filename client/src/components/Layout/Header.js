@@ -7,10 +7,12 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 export const Header = () => {
-  // const [isStudent, setIsStudent] = useState();
-
   const user = useUser();
+  // console.log(useUser());
   const handleLogout = useUserLogout();
+
+  console.log(user?.isstudent);
+  // const [isStudent, setIsStudent] = useState(user.isstudent);
 
   // useEffect(() => {
   //   setIsStudent(user.isstudent);
@@ -42,7 +44,7 @@ export const Header = () => {
               </NavDropdown>
             </>
           )}
-          {user && (
+          {user?.isstudent && (
             <>
               <Nav.Link as="div">
                 <Link to="/student">Profile</Link>

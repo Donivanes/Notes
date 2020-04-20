@@ -31,13 +31,13 @@ router.post("/signup", isLoggedOut(), async (req, res, next) => {
   if (!existingUser) {
     const newUser = await User.create({
       username,
-      email,
       password,
     });
     if (course && !subject) {
       const findIdCourse = await Course.findOne({ name: course });
       const newStudent = await Student.create({
         username: newUser._id,
+        email,
         firstname,
         lastname,
         course: findIdCourse._id,
@@ -48,6 +48,7 @@ router.post("/signup", isLoggedOut(), async (req, res, next) => {
       });
       const newTeacher = await Teacher.create({
         username: newUser._id,
+        email,
         firstname,
         lastname,
         subject,
@@ -75,7 +76,7 @@ router.post(
   (req, res) => {
     return res
       .status(200)
-      .json(_.pick(req.user, ["email", "_id", "createdAt", "updatedAt"]));
+      .json(_.pick(req.user, ["username", "_id", "createdAt", "updatedAt"]));
   }
 );
 
