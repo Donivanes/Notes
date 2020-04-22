@@ -13,6 +13,7 @@ const user = require("./user");
 const student = require("./student");
 const teacher = require("./teacher");
 const email = require("./email");
+const course = require("./course");
 
 router.use("/auth", auth);
 
@@ -22,5 +23,6 @@ router.use("/user", user);
 router.use("/student", student);
 router.use("/teacher", teacher);
 router.use("/email", email);
+router.use("/course", course);
 
 module.exports = router;

@@ -46,6 +46,7 @@ const Page = withRouter(({ history }) => {
     const dataToSumbit = {
       student,
       data,
+      user,
     };
     await sendEmail(dataToSumbit);
     history.push("/student");

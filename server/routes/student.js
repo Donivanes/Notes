@@ -14,23 +14,23 @@ router.get("/", (req, res, next) => {
     .catch((err) => res.status(500).json(err));
 });
 
-/* GET STUDENTS BY COURSE */
-
-router.get("/course/:courseId", (req, res, next) => {
-  const { courseId } = req.params;
-  Student.find({ course: courseId })
-    .populate("course")
-    .then((course) => {
-      res.json(course);
-    })
-    .catch((err) => res.status(500).json(err));
-});
-
 //GET ONE STUDENT
 
 router.get("/getstudent", (req, res, next) => {
   Student.findOne({ username: req.user._id })
     .populate("course")
+    .then((student) => {
+      res.json(student);
+    })
+    .catch((err) => res.status(500).json(err));
+});
+
+/* GET ALL STUDENTS BY ID COURSE */
+
+router.get("/:id", (req, res, next) => {
+  const { id } = req.params;
+  Student.find({ course: id })
+    // .populate("course")
     .then((student) => {
       res.json(student);
     })

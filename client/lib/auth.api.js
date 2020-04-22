@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useContext } from "react";
+import _ from "lodash";
 
 export const UserContext = React.createContext();
 
@@ -88,6 +89,12 @@ export const getStudent = async () => {
   return res.data;
 };
 
+export const getStudentCourse = async (idCourse) => {
+  const res = await api.get(`/student/${idCourse}`);
+  console.log(res);
+  return res.data;
+};
+
 //TEACHER
 
 export const getAllTeachers = async () => {
@@ -98,6 +105,21 @@ export const getAllTeachers = async () => {
 //EMAIL
 
 export const sendEmail = async (dataToSubmit) => {
-  const res = await api.post("/email/sendEmail", dataToSubmit);
+  const res = await api.post("/email/sendemailstudent", dataToSubmit);
   return res.data;
+};
+
+//COURSE
+
+export const getAllCourses = async () => {
+  const res = await api.get("/course");
+  return res.data;
+};
+
+//GET ONE COURSE
+
+export const getCourseId = async (idCourse) => {
+  const res = await api.get("/course");
+  const all = _.filter(res.data, { _id: idCourse });
+  return all;
 };

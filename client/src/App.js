@@ -12,6 +12,11 @@ import { LoginPage } from "./pages/Login.Page";
 import { StudentPage } from "./pages/Student.Page";
 import { StudentNotesPage } from "./pages/StudentNotes.Page";
 import { StudentConctactPage } from "./pages/StudentContact.Page";
+import { TeacherPage } from "./pages/Teacher.Page";
+import { TeacherCoursesExamPage } from "./pages/TeacherCoursesExam.Page";
+import { TeacherCoursesCalPage } from "./pages/TeacherCoursesCalification.Page";
+import { TeacherCoursesContactPage } from "./pages/TeacherCoursesContact.Page";
+import { TeacherContactPage } from "./pages/TeacherContact.Page";
 
 export const App = withAuthentication(() => (
   <Router>
@@ -24,8 +29,16 @@ export const App = withAuthentication(() => (
         <Route path="/student" component={StudentPage} />
         <Route path="/califications" component={StudentNotesPage} />
         <Route path="/contact" component={StudentConctactPage} />
-
-        {/* <Route path="/profile" component={ProfilePage} /> */}
+        <Route path="/teacher" component={TeacherPage} />
+        <Route path="/putexam" component={TeacherCoursesExamPage} />
+        <Route path="/putcalifications" component={TeacherCoursesCalPage} />
+        <Route path="/contactstudents" component={TeacherCoursesContactPage} />
+        <Route
+          path="/contactstudent/:id"
+          component={(props) => {
+            return <TeacherContactPage idCourse={props.match.params.id} />;
+          }}
+        />
       </Switch>
     </Layout>
   </Router>

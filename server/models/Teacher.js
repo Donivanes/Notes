@@ -5,7 +5,7 @@ const EMAIL_PATTERN = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const teacherSchema = new Schema(
   {
-    username: { type: Schema.ObjectId, ref: "User" },
+    username: { type: Schema.Types.ObjectId, ref: "User" },
     email: {
       type: String,
       trim: true,

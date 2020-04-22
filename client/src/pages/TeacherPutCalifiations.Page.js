@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { withProtected } from "../../lib/protectRoute.hoc";
-import { getStudent, useUser } from "../../lib/auth.api";
+import { useUser } from "../../lib/auth.api";
 import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 const Button = styled.button`
@@ -21,31 +22,25 @@ const Button = styled.button`
   font-size: 1em;
 `;
 
-const Page = () => {
-  const [student, setStudent] = useState([]);
+const Page = (props) => {
   const user = useUser();
 
-  useEffect(() => {
-    getStudent().then((student) => setStudent(student));
-  }, []);
-  console.log(student);
   if (!user) {
     return <div>cargando</div>;
   } else
     return (
       <Container>
-        <ul>
-          <li>Matematicas</li>
-          <p>{student.notes?.Matematicas}</p>
-          <li>Lengua</li>
-          <li>Fisica</li>
-          <li>Quimica</li>
-          <li>Biologia</li>
-          <li>EdFisica</li>
-          <li>Ingles</li>
-        </ul>
+        <Link to="/putexamsorcalifications">
+          <Button>Poner fecha de examen</Button>
+        </Link>
+        <Link to="/putexamsorcalifications">
+          <Button>Calificar alumnos</Button>
+        </Link>
+        <Link to="/contactstudents">
+          <Button>Pregunta tus dudas</Button>
+        </Link>
       </Container>
     );
 };
 
-export const StudentNotesPage = withProtected(Page);
+export const TeacherPutCalifications = withProtected(Page);

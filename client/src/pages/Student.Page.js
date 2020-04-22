@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { withProtected } from "../../lib/protectRoute.hoc";
-import { getStudent, useUser } from "../../lib/auth.api";
+import { useUser } from "../../lib/auth.api";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -23,14 +23,7 @@ const Button = styled.button`
 `;
 
 const Page = () => {
-  // const [student, setStudent] = useState([]);
-  // const [user, setUser] = useState();
   const user = useUser();
-
-  // useEffect(() => {
-  //   setUser()
-  //   getStudent().then((student) => setStudent(student));
-  // }, []);
 
   if (!user) {
     return <div>cargando</div>;
