@@ -1,65 +1,110 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useForm, FormContext } from "react-hook-form";
+import { withRouter } from "react-router-dom";
 import { withProtected } from "../../lib/protectRoute.hoc";
-import { useUser, getCourseId, getStudentCourse } from "../../lib/auth.api";
-import styled from "styled-components";
+import {
+  useUser,
+  getTeacher,
+  sendEmailTeacher,
+  getStudentById,
+} from "../../lib/auth.api";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
-const Button = styled.button`
-  background-color: #eaffd0;
-  color: black;
-  border: 1px solid black;
-  border-radius: 2em;
-  box-shadow: 5px 5px 10px #000000;
-  padding: 2em 0;
-  margin: 1em;
-  width: 20vw;
-  font-size: 1em;
-`;
+const Page = withRouter(({ history, idStudent }) => {
+  const [teacher, setTeacher] = useState([]);
+  const [student, setStudent] = useState([]);
 
-const Page = (props) => {
   const user = useUser();
-  const [course, setCourse] = useState([]);
-  const [students, setStudents] = useState([]);
+  const [studentEmail, setStudentEmail] = useState("");
 
   useEffect(() => {
-    if (props.idCourse) {
-      getStudentCourse(props.idCourse).then((students) =>
-        setStudents(students)
-      );
-    }
-  }, [props]);
+    getStudentById(idStudent).then((student) => setStudent(student));
+  }, [idStudent]);
 
-  // useEffect(() => {
-  //   getStudentCourse().then((students) => setStudent(students));
-  // }, []);
+  useEffect(() => {
+    getTeacher().then((teacher) => setTeacher(teacher));
+  }, []);
 
-  console.log(students);
+  console.log(teacher);
 
-  if (!user) {
-    return <div>cargando</div>;
-  } else
-    return (
+  const handleChange = (event) => {
+    setStudentEmail(event.target.value);
+  };
+
+  const methods = useForm({
+    mode: "onBlur",
+    defaultValues: {
+      text: "",
+      studentEmail: "",
+    },
+  });
+
+  const { register, handleSubmit, errors } = methods;
+
+  const onSubmit = async (data) => {
+    const dataToSumbit = {
+      teacher,
+      data,
+      user,
+    };
+    await sendEmailTeacher(dataToSumbit);
+    history.push("/teacher");
+  };
+
+  // if (!student) {
+  //   return <div>cargando</div>;
+  // } else
+  return (
+    <FormContext {...methods}>
       <Container>
-        {students?.map((student, i) => (
-          <Link key={i} to={`/studentid/${student._id}`}>
-            <Button>{student.firstname}</Button>
-          </Link>
-        ))}
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Form.Group controlId="teacher">
+            <Form.Label>Email del Alumno</Form.Label>
+            <Form.Control
+              as="select"
+              value=""
+              name="studentEmail"
+              type="text"
+              placeholder="Email del profesor"
+              value={studentEmail}
+              onChange={handleChange}
+              ref={register({
+                required: {
+                  value: true,
+                  message: "Este campo es requerido",
+                },
+              })}
+            >
+              <option>{`${student.firstname} <${student.email}>`}</option>
+            </Form.Control>
+          </Form.Group>
+
+          <Form.Group controlId="text">
+            <Form.Label>Cuerpo del email</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows="3"
+              name="text"
+              placeholder="Escribe tu correo aqui"
+              ref={register({
+                required: {
+                  value: true,
+                  message: "Este campo es requerido",
+                },
+              })}
+            />
+          </Form.Group>
+
+          <Button variant="primary" type="submit">
+            Enviar correo!
+          </Button>
+        </Form>
       </Container>
-      // <Container>
-      //   {course?.map((course, i) => (
-      //     <Link key={i} to={`/studentid/`}>
-      //       <Button>{course.name}</Button>
-      //     </Link>
-      //   ))}
-      // </Container>
-    );
-};
+    </FormContext>
+  );
+});
 
 export const TeacherContactPage = withProtected(Page);

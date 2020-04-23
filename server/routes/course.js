@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Course = require("../models/Course");
+const Student = require("../models/Student");
 
 /* GET ALL COURSES */
 
@@ -15,11 +16,13 @@ router.get("/", (req, res, next) => {
 });
 
 //GET ONE COURSE
+
 router.get("/:id", (req, res, next) => {
   const { id } = req.params;
-  Course.findOne({ _id: id })
-    .then((course) => {
-      res.json(course);
+  Student.find({ course: id })
+    // .populate("course")
+    .then((student) => {
+      res.json(student);
     })
     .catch((err) => res.status(500).json(err));
 });

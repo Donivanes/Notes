@@ -16,6 +16,7 @@ import { TeacherPage } from "./pages/Teacher.Page";
 import { TeacherCoursesExamPage } from "./pages/TeacherCoursesExam.Page";
 import { TeacherCoursesCalPage } from "./pages/TeacherCoursesCalification.Page";
 import { TeacherCoursesContactPage } from "./pages/TeacherCoursesContact.Page";
+import { TeacherStudentsContactPage } from "./pages/TeacherStudentsContact.Page";
 import { TeacherContactPage } from "./pages/TeacherContact.Page";
 
 export const App = withAuthentication(() => (
@@ -34,9 +35,21 @@ export const App = withAuthentication(() => (
         <Route path="/putcalifications" component={TeacherCoursesCalPage} />
         <Route path="/contactstudents" component={TeacherCoursesContactPage} />
         <Route
-          path="/contactstudent/:id"
+          path="/contactstudent/:idCourse"
           component={(props) => {
-            return <TeacherContactPage idCourse={props.match.params.id} />;
+            return (
+              <TeacherStudentsContactPage
+                idCourse={props.match.params.idCourse}
+              />
+            );
+          }}
+        />
+        <Route
+          path="/studentid/:idStudent"
+          component={(props) => {
+            return (
+              <TeacherContactPage idStudent={props.match.params.idStudent} />
+            );
           }}
         />
       </Switch>

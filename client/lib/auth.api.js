@@ -90,8 +90,14 @@ export const getStudent = async () => {
 };
 
 export const getStudentCourse = async (idCourse) => {
-  const res = await api.get(`/student/${idCourse}`);
-  console.log(res);
+  const res = await api.get(`/course/${idCourse}`);
+  // console.log(res);
+  return res.data;
+};
+
+export const getStudentById = async (idStudent) => {
+  const res = await api.get(`/student/${idStudent}`);
+  console.log(res.data);
   return res.data;
 };
 
@@ -102,10 +108,20 @@ export const getAllTeachers = async () => {
   return res.data;
 };
 
+export const getTeacher = async () => {
+  const res = await api.get("/teacher/getteacher");
+  return res.data;
+};
+
 //EMAIL
 
-export const sendEmail = async (dataToSubmit) => {
+export const sendEmailStudent = async (dataToSubmit) => {
   const res = await api.post("/email/sendemailstudent", dataToSubmit);
+  return res.data;
+};
+
+export const sendEmailTeacher = async (dataToSubmit) => {
+  const res = await api.post("/email/sendemailteacher", dataToSubmit);
   return res.data;
 };
 

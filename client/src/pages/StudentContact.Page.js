@@ -6,7 +6,7 @@ import {
   useUser,
   getAllTeachers,
   getStudent,
-  sendEmail,
+  sendEmailStudent,
 } from "../../lib/auth.api";
 
 import Container from "react-bootstrap/Container";
@@ -48,7 +48,7 @@ const Page = withRouter(({ history }) => {
       data,
       user,
     };
-    await sendEmail(dataToSumbit);
+    await sendEmailStudent(dataToSumbit);
     history.push("/student");
   };
 

@@ -25,11 +25,11 @@ router.get("/getstudent", (req, res, next) => {
     .catch((err) => res.status(500).json(err));
 });
 
-/* GET ALL STUDENTS BY ID COURSE */
+/* GET ONE STUDENT BY ID */
 
 router.get("/:id", (req, res, next) => {
   const { id } = req.params;
-  Student.find({ course: id })
+  Student.find({ _id: id })
     // .populate("course")
     .then((student) => {
       res.json(student);
