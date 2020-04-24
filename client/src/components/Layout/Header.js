@@ -18,7 +18,7 @@ export const Header = () => {
         {`
     .navbar-custom {
       background-color: #95e1d3;
-      color: #f38181;
+      color: #f38181; 
     }
 
     `}

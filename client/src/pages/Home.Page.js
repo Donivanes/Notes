@@ -21,7 +21,8 @@ const Button = styled.button`
   width: 100%;
   transition-duration: 0.4s;
   border-radius: 4px;
-  background-color: #eaffd0;
+  background-color: #fce38a;
+  border: 1px solid #f38181;
   &:hover {
     background-color: #f38181;
   } /* Green */

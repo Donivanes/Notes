@@ -44,9 +44,11 @@ const Page = (props) => {
     return (
       <Container>
         {students?.map((student, i) => (
-          <Link to>
-            {/* // <Link key={i} to={`/calificatestudent/${student.id}`}> */}
-            <Button>{student.firstname}</Button>
+          // <Link to="/paypal">
+          <Link key={i} to={`/calificatestudent/${student.id}`}>
+            <Button>
+              {student.firstname} {student.lastname}
+            </Button>
           </Link>
         ))}
       </Container>

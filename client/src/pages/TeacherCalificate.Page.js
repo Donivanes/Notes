@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { withProtected } from "../../lib/protectRoute.hoc";
 import { useUser } from "../../lib/auth.api";
 import styled from "styled-components";
-import { Product } from "../components/PaypalButton";
 import { PaypalCheckoutButton } from "../components/PaypalCheckoutButton";
 
 const Container = styled.div`
@@ -18,7 +16,7 @@ const order = {
   total: "5.00",
   items: [
     {
-      sku: "111",
+      sku: "Ironhack",
       name: "Ayudita al desarrollador",
       price: "5.00",
       quantity: 1,

@@ -40,20 +40,20 @@ export const SignUpTeacherPage = withRouter(({ history }) => {
     <>
       <style type="text/css">
         {`
-    .btn-flat {
-      background-color: purple;
-      color: white;
+    .btn-width {
+      width: 100%;
+      background-color: #fce38a;
+      border: 1px solid #f38181;
+      transition-duration: 0.4s;
     }
-
-    .btn-xxl {
-      padding: 1rem 1.5rem;
-      font-size: 1.5rem;
+    .btn-width:hover{
+      background-color: #f38181;
     }
     `}
       </style>
 
       <FormContext {...methods}>
-        <Container>
+        <Container style={{ padding: "4em" }}>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group controlId="user">
               <Form.Label>Usuario</Form.Label>
@@ -167,8 +167,8 @@ export const SignUpTeacherPage = withRouter(({ history }) => {
               </Form.Group>
             </Form.Row>
 
-            <Button variant="primary" type="submit">
-              Submit
+            <Button variant="width" type="submit">
+              Registrate
             </Button>
           </Form>
         </Container>
