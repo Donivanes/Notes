@@ -9,6 +9,8 @@ import {
   sendEmailStudent,
 } from "../../lib/auth.api";
 
+import styled from "styled-components";
+
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -40,69 +42,81 @@ const Page = withRouter(({ history }) => {
     },
   });
 
-  const { register, handleSubmit, errors } = methods;
+  const { register, handleSubmit, reset } = methods;
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data, e) => {
     const dataToSumbit = {
       student,
       data,
       user,
     };
     await sendEmailStudent(dataToSumbit);
+    e.target.reset();
     history.push("/student");
   };
 
   return (
-    <FormContext {...methods}>
-      <Container>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <Form.Group controlId="teacher">
-            <Form.Label>Email del Profesor</Form.Label>
-            <Form.Control
-              as="select"
-              value=""
-              name="teacherEmail"
-              type="text"
-              placeholder="Email del profesor"
-              value={teacherEmail}
-              onChange={handleChange}
-              ref={register({
-                required: {
-                  value: true,
-                  message: "Este campo es requerido",
-                },
-              })}
-            >
-              {teacher.map((teacher, i) => (
-                <option key={i}>
-                  {`${teacher.subject} <${teacher.email}>`}
-                </option>
-              ))}
-            </Form.Control>
-          </Form.Group>
+    <>
+      <style type="text/css">
+        {`
+    .btn-width {
+      width: 100%;
+      background-color: #fce38a;
+      border: 1px solid #f38181;
+    }
+    `}
+      </style>
+      <FormContext {...methods}>
+        <Container style={{ padding: "4em" }}>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form.Group controlId="teacher">
+              <Form.Label>Email del Profesor</Form.Label>
+              <Form.Control
+                as="select"
+                value=""
+                name="teacherEmail"
+                type="text"
+                placeholder="Email del profesor"
+                value={teacherEmail}
+                onChange={handleChange}
+                ref={register({
+                  required: {
+                    value: true,
+                    message: "Este campo es requerido",
+                  },
+                })}
+              >
+                {teacher.map((teacher, i) => (
+                  <option key={i}>
+                    {`${teacher.subject} <${teacher.email}>`}
+                  </option>
+                ))}
+              </Form.Control>
+            </Form.Group>
 
-          <Form.Group controlId="text">
-            <Form.Label>Cuerpo del email</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows="3"
-              name="text"
-              placeholder="Escribe tu correo aqui"
-              ref={register({
-                required: {
-                  value: true,
-                  message: "Este campo es requerido",
-                },
-              })}
-            />
-          </Form.Group>
+            <Form.Group controlId="text">
+              <Form.Label>Cuerpo del email</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows="3"
+                name="text"
+                placeholder="Escribe tu correo aqui"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: "Este campo es requerido",
+                  },
+                })}
+              />
+            </Form.Group>
 
-          <Button variant="primary" type="submit">
-            Enviar correo!
-          </Button>
-        </Form>
-      </Container>
-    </FormContext>
+            <Button variant="width" type="submit">
+              Enviar correo!
+            </Button>
+          </Form>
+        </Container>
+      </FormContext>
+    </>
   );
 });
 

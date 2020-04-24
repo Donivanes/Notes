@@ -14,21 +14,21 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 const Page = withRouter(({ history, idStudent }) => {
-  const [teacher, setTeacher] = useState([]);
-  const [student, setStudent] = useState([]);
-
-  const user = useUser();
-  const [studentEmail, setStudentEmail] = useState("");
-
   useEffect(() => {
-    getStudentById(idStudent).then((student) => setStudent(student));
+    getStudentById(idStudent).then((student) => setStudent(student[0]));
   }, [idStudent]);
 
   useEffect(() => {
     getTeacher().then((teacher) => setTeacher(teacher));
   }, []);
 
-  console.log(teacher);
+  const [teacher, setTeacher] = useState([]);
+  const [student, setStudent] = useState([]);
+
+  const user = useUser();
+  const [studentEmail, setStudentEmail] = useState("");
+
+  console.log(student);
 
   const handleChange = (event) => {
     setStudentEmail(event.target.value);
@@ -42,7 +42,7 @@ const Page = withRouter(({ history, idStudent }) => {
     },
   });
 
-  const { register, handleSubmit, errors } = methods;
+  const { register, handleSubmit, reset } = methods;
 
   const onSubmit = async (data) => {
     const dataToSumbit = {
@@ -51,6 +51,7 @@ const Page = withRouter(({ history, idStudent }) => {
       user,
     };
     await sendEmailTeacher(dataToSumbit);
+    e.target.reset();
     history.push("/teacher");
   };
 
@@ -58,52 +59,63 @@ const Page = withRouter(({ history, idStudent }) => {
   //   return <div>cargando</div>;
   // } else
   return (
-    <FormContext {...methods}>
-      <Container>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <Form.Group controlId="teacher">
-            <Form.Label>Email del Alumno</Form.Label>
-            <Form.Control
-              as="select"
-              value=""
-              name="studentEmail"
-              type="text"
-              placeholder="Email del profesor"
-              value={studentEmail}
-              onChange={handleChange}
-              ref={register({
-                required: {
-                  value: true,
-                  message: "Este campo es requerido",
-                },
-              })}
-            >
-              <option>{`${student.firstname} <${student.email}>`}</option>
-            </Form.Control>
-          </Form.Group>
+    <>
+      <style type="text/css">
+        {`
+    .btn-width {
+      width: 100%;
+      background-color: #fce38a;
+      border: 1px solid #f38181;
+    }
+    `}
+      </style>
+      <FormContext {...methods}>
+        <Container style={{ padding: "4em" }}>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form.Group controlId="teacher">
+              <Form.Label>Email del Alumno</Form.Label>
+              <Form.Control
+                as="select"
+                value=""
+                name="studentEmail"
+                type="text"
+                placeholder="Email del profesor"
+                value={studentEmail}
+                onChange={handleChange}
+                ref={register({
+                  required: {
+                    value: true,
+                    message: "Este campo es requerido",
+                  },
+                })}
+              >
+                <option>{`${student.firstname} <${student.email}>`}</option>
+              </Form.Control>
+            </Form.Group>
 
-          <Form.Group controlId="text">
-            <Form.Label>Cuerpo del email</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows="3"
-              name="text"
-              placeholder="Escribe tu correo aqui"
-              ref={register({
-                required: {
-                  value: true,
-                  message: "Este campo es requerido",
-                },
-              })}
-            />
-          </Form.Group>
+            <Form.Group controlId="text">
+              <Form.Label>Cuerpo del email</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows="3"
+                name="text"
+                placeholder="Escribe tu correo aqui"
+                ref={register({
+                  required: {
+                    value: true,
+                    message: "Este campo es requerido",
+                  },
+                })}
+              />
+            </Form.Group>
 
-          <Button variant="primary" type="submit">
-            Enviar correo!
-          </Button>
-        </Form>
-      </Container>
-    </FormContext>
+            <Button variant="width" type="submit">
+              Enviar correo!
+            </Button>
+          </Form>
+        </Container>
+      </FormContext>
+    </>
   );
 });
 

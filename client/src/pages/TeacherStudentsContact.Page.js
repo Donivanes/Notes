@@ -8,16 +8,17 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 4em;
 `;
 
 const Button = styled.button`
-  background-color: #eaffd0;
+  background-color: #fce38a;
   color: black;
   border: 1px solid black;
   border-radius: 2em;
   box-shadow: 5px 5px 10px #000000;
   padding: 2em 0;
-  margin: 1em;
+  margin: 1.5em;
   width: 20vw;
   font-size: 1em;
 `;

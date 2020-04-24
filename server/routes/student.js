@@ -8,6 +8,7 @@ const Student = require("../models/Student");
 router.get("/", (req, res, next) => {
   Student.find()
     .populate("course")
+
     .then((student) => {
       res.json(student);
     })
@@ -19,6 +20,12 @@ router.get("/", (req, res, next) => {
 router.get("/getstudent", (req, res, next) => {
   Student.findOne({ username: req.user._id })
     .populate("course")
+    .populate({
+      path: "course",
+      populate: {
+        path: "exams",
+      },
+    })
     .then((student) => {
       res.json(student);
     })

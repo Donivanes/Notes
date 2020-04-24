@@ -8,20 +8,20 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 3em;
 `;
 
 const Button = styled.button`
-  background-color: #eaffd0;
+  background-color: #fce38a;
   color: black;
   border: 1px solid black;
   border-radius: 2em;
   box-shadow: 5px 5px 10px #000000;
   padding: 2em 0;
-  margin: 1em;
+  margin: 1.5em;
   width: 20vw;
   font-size: 1em;
 `;
-
 const Page = () => {
   const user = useUser();
   const [courses, setCourses] = useState([]);
@@ -36,7 +36,7 @@ const Page = () => {
     return (
       <Container>
         {courses.map((course, i) => (
-          <Link key={i} to={`/putcalifications/${course._id}`}>
+          <Link key={i} to={`/putcalification/${course._id}`}>
             <Button>{course.name}</Button>
           </Link>
         ))}

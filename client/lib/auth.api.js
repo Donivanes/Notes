@@ -97,7 +97,6 @@ export const getStudentCourse = async (idCourse) => {
 
 export const getStudentById = async (idStudent) => {
   const res = await api.get(`/student/${idStudent}`);
-  console.log(res.data);
   return res.data;
 };
 
@@ -138,4 +137,16 @@ export const getCourseId = async (idCourse) => {
   const res = await api.get("/course");
   const all = _.filter(res.data, { _id: idCourse });
   return all;
+};
+
+//EXAM
+
+export const getAllExams = async () => {
+  const res = await api.get("/exam");
+  return res.data;
+};
+
+export const addNewExam = async (dataToSubmit) => {
+  const res = await api.post("/exam/newexam", dataToSubmit);
+  return res.data;
 };

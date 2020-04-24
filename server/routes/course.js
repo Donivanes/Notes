@@ -10,7 +10,14 @@ router.get("/", (req, res, next) => {
   Course.find()
     // .populate("exams")
     .then((course) => {
-      res.json(course);
+      res.json([
+        course[1],
+        course[4],
+        course[3],
+        course[0],
+        course[2],
+        course[5],
+      ]);
     })
     .catch((err) => res.status(500).json(err));
 });
