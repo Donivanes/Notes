@@ -31,17 +31,17 @@ const Page = () => {
   } else
     return (
       <Container>
-        <Link to="/exams">
-          <Button>Proximos examenes</Button>
+        <Link to="/putexams">
+          <Button>Poner fecha de examen</Button>
         </Link>
-        <Link to="/califications">
-          <Button>Calificaciones examenes</Button>
+        <Link to="/putcalifications">
+          <Button>Calificar alumnos</Button>
         </Link>
-        <Link to="/contact">
+        <Link to="/contactstudents">
           <Button>Pregunta tus dudas</Button>
         </Link>
       </Container>
     );
 };
 
-export const StudentPage = withProtected(Page);
+export const TeacherPage = withProtected(Page);

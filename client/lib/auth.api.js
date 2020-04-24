@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useContext } from "react";
+import _ from "lodash";
 
 export const UserContext = React.createContext();
 
@@ -88,6 +89,17 @@ export const getStudent = async () => {
   return res.data;
 };
 
+export const getStudentCourse = async (idCourse) => {
+  const res = await api.get(`/course/${idCourse}`);
+  // console.log(res);
+  return res.data;
+};
+
+export const getStudentById = async (idStudent) => {
+  const res = await api.get(`/student/${idStudent}`);
+  return res.data;
+};
+
 //TEACHER
 
 export const getAllTeachers = async () => {
@@ -95,9 +107,46 @@ export const getAllTeachers = async () => {
   return res.data;
 };
 
+export const getTeacher = async () => {
+  const res = await api.get("/teacher/getteacher");
+  return res.data;
+};
+
 //EMAIL
 
-export const sendEmail = async (dataToSubmit) => {
-  const res = await api.post("/email/sendEmail", dataToSubmit);
+export const sendEmailStudent = async (dataToSubmit) => {
+  const res = await api.post("/email/sendemailstudent", dataToSubmit);
+  return res.data;
+};
+
+export const sendEmailTeacher = async (dataToSubmit) => {
+  const res = await api.post("/email/sendemailteacher", dataToSubmit);
+  return res.data;
+};
+
+//COURSE
+
+export const getAllCourses = async () => {
+  const res = await api.get("/course");
+  return res.data;
+};
+
+//GET ONE COURSE
+
+export const getCourseId = async (idCourse) => {
+  const res = await api.get("/course");
+  const all = _.filter(res.data, { _id: idCourse });
+  return all;
+};
+
+//EXAM
+
+export const getAllExams = async () => {
+  const res = await api.get("/exam");
+  return res.data;
+};
+
+export const addNewExam = async (dataToSubmit) => {
+  const res = await api.post("/exam/newexam", dataToSubmit);
   return res.data;
 };

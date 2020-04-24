@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { withProtected } from "../../lib/protectRoute.hoc";
-import { useUser } from "../../lib/auth.api";
+import { useUser, getCourseId, getStudentCourse } from "../../lib/auth.api";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -23,25 +23,33 @@ const Button = styled.button`
   font-size: 1em;
 `;
 
-const Page = () => {
+const Page = (props) => {
   const user = useUser();
+  const [course, setCourse] = useState([]);
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    if (props.idCourse) {
+      getStudentCourse(props.idCourse).then((students) =>
+        setStudents(students)
+      );
+    }
+  }, [props]);
+
+  console.log(students);
 
   if (!user) {
     return <div>cargando</div>;
   } else
     return (
       <Container>
-        <Link to="/exams">
-          <Button>Proximos examenes</Button>
-        </Link>
-        <Link to="/califications">
-          <Button>Calificaciones examenes</Button>
-        </Link>
-        <Link to="/contact">
-          <Button>Pregunta tus dudas</Button>
-        </Link>
+        {students?.map((student, i) => (
+          <Link key={i} to={`/studentid/${student.id}`}>
+            <Button>{student.firstname}</Button>
+          </Link>
+        ))}
       </Container>
     );
 };
 
-export const StudentPage = withProtected(Page);
+export const TeacherStudentsContactPage = withProtected(Page);

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import loading from "./752.gif";
 
 const LoadingWrapper = styled.div`
   display: flex;
@@ -17,6 +18,6 @@ const LoadingWrapper = styled.div`
 
 export const Loading = () => (
   <LoadingWrapper>
-    <img src="https://i.pinimg.com/originals/2b/7c/f2/2b7cf21b42bccf075a5dbe1b9586d477.gif" />
+    <img src={loading} />
   </LoadingWrapper>
 );

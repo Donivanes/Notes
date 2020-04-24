@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const dbUrl = process.env.DBURL_HEROKU;
+const dbUrl = process.env.DBURL;
 
 const withDbConnection = async (fn, disconnectEnd = true) => {
   try {

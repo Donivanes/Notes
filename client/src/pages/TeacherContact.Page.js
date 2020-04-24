@@ -4,57 +4,60 @@ import { withRouter } from "react-router-dom";
 import { withProtected } from "../../lib/protectRoute.hoc";
 import {
   useUser,
-  getAllTeachers,
-  getStudent,
-  sendEmailStudent,
+  getTeacher,
+  sendEmailTeacher,
+  getStudentById,
 } from "../../lib/auth.api";
-
-import styled from "styled-components";
 
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-const Page = withRouter(({ history }) => {
+const Page = withRouter(({ history, idStudent }) => {
+  useEffect(() => {
+    getStudentById(idStudent).then((student) => setStudent(student[0]));
+  }, [idStudent]);
+
+  useEffect(() => {
+    getTeacher().then((teacher) => setTeacher(teacher));
+  }, []);
+
   const [teacher, setTeacher] = useState([]);
   const [student, setStudent] = useState([]);
 
   const user = useUser();
-  const [teacherEmail, setTeacherEmail] = useState("");
+  const [studentEmail, setStudentEmail] = useState("");
 
-  useEffect(() => {
-    getAllTeachers().then((teachers) => setTeacher(teachers));
-  }, []);
-
-  useEffect(() => {
-    getStudent().then((student) => setStudent(student));
-  }, []);
+  console.log(student);
 
   const handleChange = (event) => {
-    setTeacherEmail(event.target.value);
+    setStudentEmail(event.target.value);
   };
 
   const methods = useForm({
     mode: "onBlur",
     defaultValues: {
       text: "",
-      teacherEmail: "",
+      studentEmail: "",
     },
   });
 
   const { register, handleSubmit, reset } = methods;
 
-  const onSubmit = async (data, e) => {
+  const onSubmit = async (data) => {
     const dataToSumbit = {
-      student,
+      teacher,
       data,
       user,
     };
-    await sendEmailStudent(dataToSumbit);
+    await sendEmailTeacher(dataToSumbit);
     e.target.reset();
-    history.push("/student");
+    history.push("/teacher");
   };
 
+  // if (!student) {
+  //   return <div>cargando</div>;
+  // } else
   return (
     <>
       <style type="text/css">
@@ -70,14 +73,14 @@ const Page = withRouter(({ history }) => {
         <Container style={{ padding: "4em" }}>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group controlId="teacher">
-              <Form.Label>Email del Profesor</Form.Label>
+              <Form.Label>Email del Alumno</Form.Label>
               <Form.Control
                 as="select"
                 value=""
-                name="teacherEmail"
+                name="studentEmail"
                 type="text"
                 placeholder="Email del profesor"
-                value={teacherEmail}
+                value={studentEmail}
                 onChange={handleChange}
                 ref={register({
                   required: {
@@ -86,11 +89,7 @@ const Page = withRouter(({ history }) => {
                   },
                 })}
               >
-                {teacher.map((teacher, i) => (
-                  <option key={i}>
-                    {`${teacher.subject} <${teacher.email}>`}
-                  </option>
-                ))}
+                <option>{`${student.firstname} <${student.email}>`}</option>
               </Form.Control>
             </Form.Group>
 
@@ -120,4 +119,4 @@ const Page = withRouter(({ history }) => {
   );
 });
 
-export const StudentConctactPage = withProtected(Page);
+export const TeacherContactPage = withProtected(Page);

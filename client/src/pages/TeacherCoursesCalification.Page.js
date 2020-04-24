@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { withProtected } from "../../lib/protectRoute.hoc";
-import { useUser } from "../../lib/auth.api";
+import { useUser, getAllCourses } from "../../lib/auth.api";
 import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 4em;
+  padding-top: 3em;
 `;
 
 const Button = styled.button`
@@ -22,26 +22,26 @@ const Button = styled.button`
   width: 20vw;
   font-size: 1em;
 `;
-
 const Page = () => {
   const user = useUser();
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    getAllCourses().then((courses) => setCourses(courses));
+  }, []);
 
   if (!user) {
     return <div>cargando</div>;
   } else
     return (
       <Container>
-        <Link to="/exams">
-          <Button>Proximos examenes</Button>
-        </Link>
-        <Link to="/califications">
-          <Button>Calificaciones examenes</Button>
-        </Link>
-        <Link to="/contact">
-          <Button>Pregunta tus dudas</Button>
-        </Link>
+        {courses.map((course, i) => (
+          <Link key={i} to={`/putcalification/${course._id}`}>
+            <Button>{course.name}</Button>
+          </Link>
+        ))}
       </Container>
     );
 };
 
-export const StudentPage = withProtected(Page);
+export const TeacherCoursesCalPage = withProtected(Page);

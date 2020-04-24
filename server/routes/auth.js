@@ -35,6 +35,7 @@ router.post("/signup", isLoggedOut(), async (req, res, next) => {
     });
     if (course && !subject) {
       const findIdCourse = await Course.findOne({ name: course });
+      console.log(findIdCourse);
       const newStudent = await Student.create({
         username: newUser._id,
         email,

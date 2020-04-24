@@ -33,7 +33,7 @@ export const SignUpStudentPage = withRouter(({ history }) => {
   const onSubmit = async (data) => {
     await doSignup(data);
     setUser(data);
-    history.push("/");
+    history.push("/student");
   };
 
   return (

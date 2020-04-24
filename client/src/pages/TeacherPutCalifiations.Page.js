@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { withProtected } from "../../lib/protectRoute.hoc";
 import { useUser } from "../../lib/auth.api";
 import styled from "styled-components";
+import PaypalCheckoutButton from "../components/PaypalCheckoutButton";
 
 const Container = styled.div`
   display: flex;
@@ -23,7 +24,21 @@ const Button = styled.button`
   font-size: 1em;
 `;
 
-const Page = () => {
+const order = {
+  customer: "Ironhacker",
+  total: "5.00",
+  items: [
+    {
+      sku: "111",
+      name: "Ayudita al desarrollador",
+      price: "5.00",
+      quantity: 1,
+      currency: "EUR",
+    },
+  ],
+};
+
+const Page = (props) => {
   const user = useUser();
 
   if (!user) {
@@ -31,17 +46,10 @@ const Page = () => {
   } else
     return (
       <Container>
-        <Link to="/exams">
-          <Button>Proximos examenes</Button>
-        </Link>
-        <Link to="/califications">
-          <Button>Calificaciones examenes</Button>
-        </Link>
-        <Link to="/contact">
-          <Button>Pregunta tus dudas</Button>
-        </Link>
+        <div>hola </div>
+        <PaypalCheckoutButton />
       </Container>
     );
 };
 
-export const StudentPage = withProtected(Page);
+export const TeacherPutCalifications = withProtected(Page);
