@@ -45,7 +45,7 @@ export const HomePage = () => {
           <Card.Body>
             <Card.Title>Registrate</Card.Title>
             <Card.Text>
-              Comienza a utilizar la App registrandote.¿Eres alumno o profesor?
+              Comienza a utilizar la App registrandote. ¿Eres alumno o profesor?
             </Card.Text>
             <Option>
               <Link to="/signupStudent">

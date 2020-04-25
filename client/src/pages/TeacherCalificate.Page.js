@@ -4,12 +4,19 @@ import { useUser } from "../../lib/auth.api";
 import styled from "styled-components";
 import { PaypalCheckoutButton } from "../components/PaypalCheckoutButton";
 
+import Badge from "react-bootstrap/Badge";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 4em;
 `;
+const style = {
+  margin: "3em",
+  padding: "1em",
+  border: "1px solid #f38181",
+};
 
 const order = {
   customer: "Ironhacker",
@@ -37,10 +44,25 @@ const Page = (props) => {
     return <div>cargando</div>;
   } else
     return (
-      <Container>
-        <div>hola </div>
-        <PaypalCheckoutButton order={order} />
-      </Container>
+      <>
+        <style type="text/css">
+          {`
+    }
+    .badge-edit{
+      background-color: #f38181
+    }
+    `}
+        </style>
+        <Container style={style}>
+          <h2>Ups, parece que seguimos en desarrollo</h2>
+          <h3>Ayudanos a continuar haciendo click aqui abajo</h3>
+          <br />
+          <h3>
+            <Badge variant="edit">Dona 5€</Badge>
+          </h3>
+          <PaypalCheckoutButton order={order} />
+        </Container>
+      </>
     );
 };
 
