@@ -24,6 +24,8 @@ const Page = () => {
   const margin = {
     marginLeft: "10px",
     width: "18rem",
+    backgroundColor: "#fce38a",
+    borderColor: "#f38181",
   };
 
   if (!user) {
@@ -40,11 +42,11 @@ const Page = () => {
         </style>
         <Container>
           {student.course?.exams.map((exam, i) => (
-            <Card border="secondary" variant="edit" style={margin} key={i}>
+            <Card style={margin} key={i}>
               <Card.Header>
                 Examen de <b>{exam.subject}</b>
               </Card.Header>
-              <Card.Body>
+              <Card.Body variant="edit">
                 <Card.Title>Fecha: {exam.date}</Card.Title>
                 <Card.Text>
                   Hora del examen <b>{exam.time}</b> PM.

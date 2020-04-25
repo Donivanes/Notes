@@ -38,7 +38,7 @@ const Page = () => {
           <Button>Calificar alumnos</Button>
         </Link>
         <Link to="/contactstudents">
-          <Button>Pregunta tus dudas</Button>
+          <Button>Contactar alumnos</Button>
         </Link>
       </Container>
     );

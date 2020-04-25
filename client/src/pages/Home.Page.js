@@ -21,7 +21,8 @@ const Button = styled.button`
   width: 100%;
   transition-duration: 0.4s;
   border-radius: 4px;
-  background-color: #eaffd0;
+  background-color: #fce38a;
+  border: 1px solid #f38181;
   &:hover {
     background-color: #f38181;
   } /* Green */
@@ -44,7 +45,7 @@ export const HomePage = () => {
           <Card.Body>
             <Card.Title>Registrate</Card.Title>
             <Card.Text>
-              Comienza a utilizar la App registrandote.¿Eres alumno o profesor?
+              Comienza a utilizar la App registrandote. ¿Eres alumno o profesor?
             </Card.Text>
             <Option>
               <Link to="/signupStudent">

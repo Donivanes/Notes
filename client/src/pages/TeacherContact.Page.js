@@ -66,6 +66,10 @@ const Page = withRouter(({ history, idStudent }) => {
       width: 100%;
       background-color: #fce38a;
       border: 1px solid #f38181;
+      transition-duration: 0.4s;
+    }
+    .btn-width:hover{
+      background-color: #f38181;
     }
     `}
       </style>
